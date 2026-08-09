@@ -1,7 +1,10 @@
 # Mermaid Circular Layout for Obsidian
 
 An Obsidian plugin that adds a circular layout to mermaid flowcharts.
-Cycles render as rings instead of dagre's flattened ladders.
+Cycles render as rings instead of dagre's flattened ladders. A diagram
+with side branches keeps its ring: the cycle stays on the circle and
+the rest hangs off it radially, the way a textbook draws the Krebs
+cycle.
 
 The layout itself lives in
 [mermaid-layout-circular](https://github.com/AndrewBroz/mermaid-layout-circular),
