@@ -50,20 +50,12 @@ development, `npm run dev` rebuilds on change.
 
 ## Requirements
 
-Obsidian 1.13.0 or later, and the requirement is real rather than
-cautious. The layout needs mermaid internals that arrived in mermaid
-11.12. Obsidian bundled mermaid 11.4.1 from 1.9 through 1.12 and
-jumped straight to 11.13.0 in 1.13.0 (per the official changelog), so
-1.13.0 is the first release that can run this layout correctly. On
-mermaid 11.4 the layout would register and render, but with the exact
-defects this engine exists to fix: arrowheads trimmed into box corners
-and labels placed by guesswork. An inactive plugin is better than that,
-so the version gate stays honest.
+Obsidian 1.13.0 or later.
 
-One quirk to know: mermaid keeps registered layouts for the life of the
-app process, and offers no way to unregister one. Disabling the plugin
-stops nothing mid-flight; the layout simply remains available until
-Obsidian restarts. This is harmless, but worth knowing.
+> [!TIP]
+> Mermaid keeps registered layouts for the life of the app process, and
+offers no way to unregister one. After disabling the plugin, the layout
+remains available until Obsidian restarts.
 
 ## License
 
