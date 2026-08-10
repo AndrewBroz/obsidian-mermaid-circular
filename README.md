@@ -33,6 +33,10 @@ Diagrams without the frontmatter are untouched.
 `layout: circular-ccw` walks it counter-clockwise — the same layout
 seen in a mirror.
 
+Hub-and-spoke shapes need no extra syntax: a star's center or a
+wheel's axle is detected and moves to the middle on its own, with the
+spokes drawn straight from border to border.
+
 ## Installation
 
 Until the plugin is in the community catalog, install it manually:
