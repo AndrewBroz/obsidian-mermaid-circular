@@ -14,6 +14,9 @@ import circularLayouts from 'mermaid-layout-circular';
  *     A --> B --> C --> A
  *   ```
  *
+ * layout: circular-ccw registers alongside and runs the same ring
+ * counter-clockwise.
+ *
  * mermaid keeps registered layouts in a module-level registry, so one
  * registration covers every render for the life of the app process.
  * mermaid has no unregister call; after the plugin is disabled the

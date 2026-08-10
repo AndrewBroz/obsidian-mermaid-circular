@@ -29,6 +29,10 @@ flowchart LR
 
 Diagrams without the frontmatter are untouched.
 
+`layout: circular` walks the ring clockwise from the top;
+`layout: circular-ccw` walks it counter-clockwise — the same layout
+seen in a mirror.
+
 ## Installation
 
 Until the plugin is in the community catalog, install it manually:
