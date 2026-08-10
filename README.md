@@ -37,7 +37,10 @@ Hub-and-spoke shapes need no extra syntax: a star's center or a
 wheel's axle is detected and moves to the middle on its own, with the
 spokes drawn straight from border to border. A pendant cycle becomes
 a satellite circle outside the main ring, and two cycles sharing a
-node draw as a figure-eight, tangent at the shared node.
+node draw as a figure-eight, tangent at the shared node. Subgraphs
+draw as boxes: members are seated side by side so the box wraps one
+arc of the ring, and a subgraph around a pendant cycle wraps the
+whole satellite.
 
 ## Installation
 
