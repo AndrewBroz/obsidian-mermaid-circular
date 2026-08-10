@@ -23,7 +23,6 @@
     "typescript": "^5.9.0"
   },
   "allowScripts": {
-    "github:AndrewBroz/mermaid-layout-circular#0ab6ea0552fb0500b4051ae5febd7274f57bcffc": true,
-    "github:AndrewBroz/mermaid-layout-circular#251702101a7be830a4565c89ab07ff8e1fd6fd73": true
+    "github:AndrewBroz/mermaid-layout-circular#701c35414e127a3df59c1c8d28df526b9cedebed": true
   }
 }
