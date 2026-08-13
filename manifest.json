@@ -1,7 +1,7 @@
 {
   "id": "mermaid-circular",
   "name": "Mermaid Circular Layout",
-  "version": "0.8.1",
+  "version": "0.8.2",
   "minAppVersion": "1.13.0",
   "description": "Adds a circular layout for mermaid flowcharts: set layout: circular in a diagram's frontmatter and cycles render as rings.",
   "author": "Andrew Broz",
