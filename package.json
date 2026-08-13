@@ -18,11 +18,8 @@
   "license": "MIT",
   "devDependencies": {
     "esbuild": "^0.28.0",
-    "mermaid-layout-circular": "github:AndrewBroz/mermaid-layout-circular",
+    "mermaid-layout-circular": "^0.9.0",
     "obsidian": "^1.10.0",
     "typescript": "^5.9.0"
-  },
-  "allowScripts": {
-    "github:AndrewBroz/mermaid-layout-circular#74f9ada6b190ecb0bb6f35f12993b3f6082c899f": true
   }
 }
