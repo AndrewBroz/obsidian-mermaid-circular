@@ -1,20 +1,17 @@
 # Mermaid Circular Layout for Obsidian
 
-An Obsidian plugin that adds a circular layout to mermaid flowcharts.
-Cycles render as rings instead of dagre's flattened ladders. A diagram
-with side branches keeps its ring: the cycle stays on the circle and
-the rest hangs off it radially, the way a textbook draws the Krebs
-cycle.
+An Obsidian plugin that adds a circular layout to Mermaid flowcharts.
 
-The layout itself lives in
+The layout code is at
 [mermaid-layout-circular](https://github.com/AndrewBroz/mermaid-layout-circular),
-which has pictures of the output and notes on how the geometry works.
-This plugin is a thin adapter: on load it registers the layout with the
-mermaid instance Obsidian already bundles.
+which shows examples of the output and explains some of the behavior, including
+direction mechanics, spoke handling, and branching.
+This plugin is a thin adapter. On load, it registers the layout with the
+Mermaid instance already bundled with Obsidian.
 
 ## Usage
 
-Opt in per diagram with frontmatter inside the mermaid fence:
+Use the circular layout by setting the config in the front-matter:
 
 ````
 ```mermaid
@@ -27,25 +24,18 @@ flowchart LR
 ```
 ````
 
-Diagrams without the frontmatter are untouched.
+`layout: circular` goes clockwise from the top.
+`layout: circular-ccw` is the counter-clockwise variant.
 
-`layout: circular` walks the ring clockwise from the top;
-`layout: circular-ccw` walks it counter-clockwise — the same layout
-seen in a mirror.
-
-Hub-and-spoke shapes need no extra syntax: a star's center or a
-wheel's axle is detected and moves to the middle on its own, with the
-spokes drawn straight from border to border. A pendant cycle becomes
-a satellite circle outside the main ring, and two cycles sharing a
-node draw as a figure-eight, tangent at the shared node and flowing
-against each other like meshing gears. Subgraphs
-draw as boxes: members are seated side by side so the box wraps one
-arc of the ring, and a subgraph around a pendant cycle wraps the
-whole satellite.
+Supports cycles, hub-and-spoke shapes, interlocking cycles, subgraphs etc.
 
 ## Installation
 
-Until the plugin is in the community catalog, install it manually:
+Until the plugin is in the community catalog, you can use
+[BRAT](https://community.obsidian.md/plugins/obsidian42-brat)
+(this is what I do, personally)
+
+If you would prefer to install it manually:
 
 1. Download `main.js` and `manifest.json` from the latest release, or
    build them yourself (below).
