@@ -167,8 +167,8 @@ function interceptMount(
 
     const drawCircular = () => {
       const mine = ++generation;
-      const theme = renderer.theme();
-      void renderer.render(source).then(
+      const theme = renderer.theme(el);
+      void renderer.render(source, el).then(
         (svg) => {
           if (destroyed || mine !== generation) return;
           showSvg(el, svg);
@@ -179,6 +179,7 @@ function interceptMount(
         },
         (failure: unknown) => {
           if (destroyed || mine !== generation) return;
+          console.error('Mermaid Circular Layout:', failure);
           error = failure;
           showError(el, failure);
           options.onError?.(failure);
@@ -221,11 +222,11 @@ function interceptMount(
         show();
       },
       refresh() {
-        // Obsidian refreshes every diagram when the theme or fonts
-        // change. Mermaid bakes its colors into the svg, so a circular
-        // diagram redraws only when the light/dark theme has flipped.
+        // Obsidian refreshes every diagram when the theme, accent or
+        // fonts change. Mermaid bakes its colors into the svg, so a
+        // circular diagram redraws only when its palette has changed.
         if (!circular) delegate?.refresh();
-        else if (drawnTheme !== renderer.theme()) drawCircular();
+        else if (drawnTheme !== renderer.theme(el)) drawCircular();
       },
       destroy() {
         destroyed = true;
@@ -236,32 +237,69 @@ function interceptMount(
   };
 }
 
-/** Lazily loads the plugin's own mermaid and draws with it. */
+/**
+ * Lazily loads the plugin's own mermaid and draws with it, dressed
+ * the way Obsidian dresses Pele.
+ *
+ * Obsidian sets its palette on every .mermaid container as --pele-*
+ * variables, and Pele paints from them: nodes on the surface color
+ * with a hairline border, 1px lines with small arrowheads, 14px edge
+ * labels on the page background, translucent subgraph boxes. Mermaid's
+ * base theme is fed the same values, resolved to concrete colors
+ * (mermaid derives shades from them, and the hand-drawn look paints
+ * with them directly), and a little theme CSS matches the geometry.
+ * A diagram that names its own theme keeps it.
+ */
 class CircularRenderer {
   private mermaid?: Promise<Mermaid>;
   private configuredFor?: string;
   private count = 0;
+  // mermaid looks its working elements up by id. Reloading the plugin
+  // brings a second renderer while diagrams from the first may still
+  // redraw, so each instance numbers its renders under its own prefix.
+  private readonly prefix = `mermaid-circular-${Math.random().toString(36).slice(2, 8)}`;
+  private queue: Promise<unknown> = Promise.resolve();
 
-  theme(): 'dark' | 'default' {
-    return document.body.classList.contains('theme-dark') ? 'dark' : 'default';
+  /** A key that changes whenever the colors a diagram is drawn in would. */
+  theme(el: HTMLElement): string {
+    return JSON.stringify(readPalette(el));
   }
 
-  async render(source: string): Promise<string> {
+  render(source: string, el: HTMLElement): Promise<string> {
+    // mermaid's configuration is global, so a render and the
+    // configuration it was drawn with go through one at a time.
+    const run = this.queue.then(() => this.renderNow(source, el));
+    this.queue = run.catch(() => undefined);
+    return run;
+  }
+
+  private async renderNow(source: string, el: HTMLElement): Promise<string> {
     const mermaid = await (this.mermaid ??= this.load());
-    const theme = this.theme();
-    const font = getComputedStyle(document.body).getPropertyValue('--font-mermaid').trim();
-    const key = `${theme}|${font}`;
+    const palette = readPalette(el);
+    const config = namesOwnTheme(source)
+      ? {
+          startOnLoad: false,
+          securityLevel: 'strict' as const,
+          theme: palette.dark ? ('dark' as const) : ('default' as const),
+          ...(palette.font && { fontFamily: palette.font }),
+        }
+      : {
+          startOnLoad: false,
+          securityLevel: 'strict' as const,
+          theme: 'base' as const,
+          // mermaid 12's default "neo" look adds drop shadows; Pele is
+          // flat. A diagram's own look: still wins.
+          look: 'classic' as const,
+          ...(palette.font && { fontFamily: palette.font }),
+          themeVariables: themeVariables(palette),
+          themeCSS: themeCSS(palette),
+        };
+    const key = JSON.stringify(config);
     if (key !== this.configuredFor) {
-      // Frontmatter config in a diagram still overrides these.
-      mermaid.initialize({
-        startOnLoad: false,
-        securityLevel: 'strict',
-        theme,
-        ...(font && { fontFamily: font, themeVariables: { fontFamily: font } }),
-      });
+      mermaid.initialize(config);
       this.configuredFor = key;
     }
-    const { svg } = await mermaid.render(`mermaid-circular-${++this.count}`, source);
+    const { svg } = await mermaid.render(`${this.prefix}-${++this.count}`, source);
     return svg;
   }
 
@@ -270,6 +308,123 @@ class CircularRenderer {
     mermaid.registerLayoutLoaders(circularLayouts);
     return mermaid;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Obsidian's diagram palette, as Pele reads it.
+
+interface Palette {
+  dark: boolean;
+  bg: string;
+  fg: string;
+  muted: string;
+  line: string;
+  surface: string;
+  surfaceAlt: string;
+  border: string;
+  radius: string;
+  font: string;
+}
+
+/** Pele's own fallbacks, for a container that defines none of these. */
+const PALETTE_VARS = {
+  bg: ['--pele-bg', '#ffffff'],
+  fg: ['--pele-fg', '#1f1f1f'],
+  muted: ['--pele-muted', '#6e6e6e'],
+  line: ['--pele-line', '#1f1f1f'],
+  surface: ['--pele-surface', '#f3f3f3'],
+  surfaceAlt: ['--pele-surface-alt', '#e6e6e6'],
+  border: ['--pele-border', '#8a8a8a'],
+} as const;
+
+function readPalette(el: HTMLElement): Palette {
+  const doc = el.ownerDocument;
+  const style = getComputedStyle(el.isConnected ? el : doc.body);
+  const colors = {} as Record<keyof typeof PALETTE_VARS, string>;
+  for (const [name, [variable, fallback]] of Object.entries(PALETTE_VARS)) {
+    colors[name as keyof typeof PALETTE_VARS] = resolveColor(doc, `var(${variable}, ${fallback})`, fallback);
+  }
+  const radius = style.getPropertyValue('--pele-radius').trim();
+  return {
+    dark: doc.body.classList.contains('theme-dark'),
+    ...colors,
+    radius: /^\d+(\.\d+)?px$/.test(radius) ? radius : '4px',
+    font: style.getPropertyValue('--pele-font').trim(),
+  };
+}
+
+let probeCanvas: CanvasRenderingContext2D | null | undefined;
+
+/**
+ * A CSS color, as rgba() mermaid can parse. Obsidian's colors may be
+ * written with hsl(var(...)), color-mix() and the like, which mermaid's
+ * color math cannot read, so the browser resolves the value and paints
+ * it, and the pixel is read back.
+ */
+function resolveColor(doc: Document, css: string, fallback: string): string {
+  const probe = doc.createElement('span');
+  probe.style.color = css;
+  probe.style.display = 'none';
+  doc.body.appendChild(probe);
+  const computed = getComputedStyle(probe).color;
+  probe.remove();
+  probeCanvas ??= Object.assign(doc.createElement('canvas'), { width: 1, height: 1 }).getContext('2d', {
+    willReadFrequently: true,
+  });
+  if (!probeCanvas) return computed || fallback;
+  probeCanvas.clearRect(0, 0, 1, 1);
+  probeCanvas.fillStyle = fallback;
+  probeCanvas.fillStyle = computed;
+  probeCanvas.fillRect(0, 0, 1, 1);
+  const [r, g, b, a] = probeCanvas.getImageData(0, 0, 1, 1).data as unknown as number[];
+  return `rgba(${r}, ${g}, ${b}, ${Math.round(((a ?? 255) / 255) * 1000) / 1000})`;
+}
+
+function themeVariables(p: Palette): Record<string, string | boolean> {
+  return {
+    darkMode: p.dark,
+    background: p.bg,
+    ...(p.font && { fontFamily: p.font }),
+    fontSize: '16px',
+    primaryColor: p.surface,
+    primaryTextColor: p.fg,
+    primaryBorderColor: p.border,
+    secondaryColor: p.surfaceAlt,
+    tertiaryColor: p.surfaceAlt,
+    mainBkg: p.surface,
+    nodeBorder: p.border,
+    nodeTextColor: p.fg,
+    textColor: p.fg,
+    titleColor: p.muted,
+    lineColor: p.line,
+    arrowheadColor: p.line,
+    clusterBkg: p.surfaceAlt,
+    clusterBorder: p.border,
+    edgeLabelBackground: p.bg,
+  };
+}
+
+/** Pele's geometry: hairlines, its corner radius, smaller edge labels. */
+function themeCSS(p: Palette): string {
+  return [
+    `.node rect, .node circle, .node ellipse, .node polygon, .node path { stroke-width: 1px; }`,
+    `.node rect.basic { rx: ${p.radius}; ry: ${p.radius}; }`,
+    `.flowchart-link { stroke-linecap: round; }`,
+    `.edge-thickness-normal { stroke-width: 1px; }`,
+    `.edge-thickness-thick { stroke-width: 2.5px; }`,
+    `.edge-pattern-dotted { stroke-dasharray: 3 4; }`,
+    `.edgeLabel { font-size: 14px; }`,
+    `.edgeLabel p, .edgeLabel .labelBkg, .labelBkg { background-color: ${p.bg}; border-radius: 3px; }`,
+    `.cluster rect { fill-opacity: 0.5; rx: ${p.radius}; ry: ${p.radius}; }`,
+    `.cluster-label, .cluster-label .nodeLabel { color: ${p.muted}; fill: ${p.muted}; }`,
+  ].join('\n');
+}
+
+/** Whether a diagram picks its own mermaid theme in its config. */
+function namesOwnTheme(source: string): boolean {
+  const front = FRONTMATTER.exec(source);
+  if (front && /^[ \t]*theme(Variables)?[ \t]*:/m.test(front[1]!)) return true;
+  return /%%\{[\s\S]*?['"]?theme(Variables)?['"]?\s*:[\s\S]*?\}%%/.test(source);
 }
 
 function showSvg(el: HTMLElement, svg: string) {

@@ -17,9 +17,13 @@ Since 1.15, Obsidian no longer ships mermaid. It draws diagrams with
 has its own layout and no way to plug in another. So this plugin
 carries its own copy of mermaid and steps in only for diagrams that
 ask for a circular layout. Every other diagram is still drawn by
-Pele, exactly as before. Because mermaid paints with its own palette,
-circular diagrams use mermaid's light or dark theme colors rather than
-the colors of your Obsidian theme.
+Pele, exactly as before.
+
+Circular diagrams are dressed to match: the plugin reads the same
+colors, font and corner radius Obsidian gives Pele, so they follow
+your theme, accent color and light or dark mode, and redraw when
+those change. A diagram that sets its own `theme:` or `look:` in its
+frontmatter keeps it.
 
 The hand-off relies on `pele.mount`, which Obsidian uses internally
 but does not document for plugins, so a future Obsidian release could
