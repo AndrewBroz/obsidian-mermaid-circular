@@ -77,7 +77,7 @@ npm run build
 ```
 
 This bundles mermaid, the layout engine and the adapter into a
-minified `main.js` of about 3.5 MB. During development, `npm run dev`
+minified `main.js` of about 3 MB. During development, `npm run dev`
 rebuilds on change.
 
 To check a change in a real Obsidian, without touching your own app or
