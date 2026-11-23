@@ -12,6 +12,7 @@ const context = await esbuild.context({
   platform: 'browser',
   outfile: 'main.js',
   sourcemap: watch ? 'inline' : false,
+  minify: !watch,
   treeShaking: true,
   logLevel: 'info',
 });
