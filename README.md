@@ -49,6 +49,8 @@ flowchart LR
 `layout: circular-ccw` is the counter-clockwise variant.
 
 Supports cycles, hub-and-spoke shapes, interlocking cycles, subgraphs etc.
+For what the layout does not handle yet, see "Not handled yet" in the
+[pele-layout-circular README](https://github.com/AndrewBroz/pele-layout-circular#not-handled-yet).
 
 ## Installation
 

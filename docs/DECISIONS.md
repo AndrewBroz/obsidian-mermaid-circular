@@ -65,3 +65,17 @@ dark and light themes. A theme switch recolors them. The plain
 flowchart is drawn by Obsidian's Pele. Editing a block from circular
 to another layout and back switches renderers in place, and
 disabling the plugin hands the rings back to Obsidian's Pele.
+
+## 2026-11-25: bump pele-layout-circular to a2439d0
+
+The lockfile now resolves pele-layout-circular `a2439d0` (was `c5c8010`).
+It lays out edges into collapsed subgraphs instead of dropping them, and
+gives edges that cross a filled group Pele's halo. `main.js` grew from
+187,553 to 190,609 bytes (74,052 to 75,254 gzipped). Checked in a
+sandboxed Obsidian, reading view and live preview, light and dark: the
+existing rings are unchanged, the collapsed subgraph draws as a node with
+its edges, and the filled-group diagram draws its edges. Edges that run
+inside a filled group, on a light custom fill in dark mode, are low
+contrast. Pele recolors an edge that runs over a fill; the wrapper keeps
+the color from Pele's own layout, a gap pele-layout-circular lists as
+open. Added `sandbox-fixtures/Groups.md` for both cases.
