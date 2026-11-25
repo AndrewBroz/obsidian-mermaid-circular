@@ -49,6 +49,14 @@ flowchart LR
 `layout: circular-ccw` is the counter-clockwise variant.
 
 Supports cycles, hub-and-spoke shapes, interlocking cycles, subgraphs etc.
+Chords, edges between nodes that aren't neighbors on the ring, are
+straight lines. Set `flowchart: { curve: linear }` in the same config for
+straight edges all round; two opposite edges then become parallel
+lines, with their labels on either side. A subgraph is a tight box
+around its members, with its title at the bottom when edges cross the
+top. A subgraph that spans half the ring or more is drawn as a band
+that follows the ring. Edges over a filled subgraph take the ink for
+that fill.
 For what the layout does not handle yet, see "Not handled yet" in the
 [pele-layout-circular README](https://github.com/AndrewBroz/pele-layout-circular#not-handled-yet).
 
@@ -73,7 +81,7 @@ npm run build
 ```
 
 This bundles Pele's flowchart and the circular layout into a
-minified `main.js` of about 190 KB. During development, `npm run dev`
+minified `main.js` of about 210 KB (about 83 KB gzipped). During development, `npm run dev`
 rebuilds on change.
 
 To check a change in a real Obsidian, without touching your own app or

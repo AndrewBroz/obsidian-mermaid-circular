@@ -27,6 +27,20 @@ flowchart LR
   Wk -.->|skip the day| Hm
 ```
 
+Straight edges: a triangle with a labeled opposite pair.
+
+```mermaid
+---
+config:
+  layout: circular
+  flowchart:
+    curve: linear
+---
+flowchart LR
+  A[Plan] -->|then| B[Build] --> C[Ship] --> A
+  C -->|back| B
+```
+
 ```mermaid
 flowchart LR
   A[Plain] --> B[dagre-ish] --> C[via Pele]

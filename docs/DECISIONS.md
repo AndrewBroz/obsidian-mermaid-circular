@@ -79,3 +79,34 @@ inside a filled group, on a light custom fill in dark mode, are low
 contrast. Pele recolors an edge that runs over a fill; the wrapper keeps
 the color from Pele's own layout, a gap pele-layout-circular lists as
 open. Added `sandbox-fixtures/Groups.md` for both cases.
+
+## 2026-11-25: pele-layout-circular 0.2.0 from npm
+
+The devDependency is now `pele-layout-circular@^0.2.0` from npm, in
+place of `github:AndrewBroz/pele-layout-circular`. The lockfile
+resolves the registry tarball. 0.2.0 is GitHub main `b9c8b92` plus the
+version bump: `main.js` built from either is byte-identical. A
+registry dependency needs no git checkout or prepare script at
+install time.
+
+It brings straight edges with `flowchart.curve: linear`, with opposite
+pairs as parallel lines and their labels stepping aside; chords that
+are always straight; edge ink that follows the circle over filled
+groups; and group shapes placed by layout-circular: tight boxes, the
+ring turned the least that clears them, bands for groups spanning half
+the ring or more, and box titles at the bottom when edges cross the
+top. `main.js` grew from 190,609 to 209,558 bytes (75,254 to 83,120
+gzipped).
+
+Added fixtures: a straight-edge triangle with a labeled opposite pair
+in `Circular.md` (the daily cycle with its "skip the day" chord was
+already there), and in `Groups.md` a filled group over six of eight
+ring nodes, which draws as a band, and the wheel with a two-node group,
+whose title sits at the bottom. Checked in a sandboxed Obsidian 1.15.1,
+reading view and live preview, dark and light: every fixture draws as
+described, the plain flowchart's drawing is the same with the plugin
+on and off, and disabling the plugin hands every circular diagram back
+to Obsidian's Pele. The sandbox window renders nothing while macOS
+reports it hidden; turning off the window's background throttling over
+CDP fixed that for the check. Limits are listed under "Not handled
+yet" in the pele-layout-circular README, which the plugin README links.
