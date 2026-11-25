@@ -3,16 +3,16 @@
 An Obsidian plugin that draws mermaid flowcharts as circles.
 
 Obsidian is a note-taking app. It draws diagrams written in mermaid,
-a language for describing diagrams as text. Its flowcharts are laid
-out in rows, so a cycle comes out as a line with one arrow looping
-back. With this plugin, a flowchart that asks for it is drawn on a
+a language for describing diagrams as text. mermaid lays out
+flowcharts in rows, so a cycle comes out as a line with one arrow
+looping back. With this plugin, a flowchart that asks for it is drawn on a
 circle. Each arrow follows the circle to the next node.
 
-This layout, meaning where each box goes and the path each arrow
-takes, also comes as packages for web pages. They are listed under
+A layout is where each box goes and the path each arrow takes. This
+one also comes as packages for web pages, listed under
 [Which package to use](#which-package-to-use).
 
-<img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/obsidian-note.png" width="518" alt="An Obsidian note titled The water cycle, with five boxes on a circle, Evaporation at the top, joined clockwise by curved arrows.">
+<img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/obsidian-note.png" width="365" alt="An Obsidian window showing a note titled The water cycle, with five boxes on a circle, Evaporation at the top, joined clockwise by curved arrows.">
 
 ## Usage
 
@@ -57,18 +57,18 @@ Requires Obsidian 1.15 or later.
 
 ## Straight edges
 
-By default, an arrow between two neighbours on the circle is curved
+By default, an arrow between two neighbors on the circle is curved
 along it. Set `flowchart.curve` to `linear` to draw straight lines
 instead, so the ring becomes a polygon.
 
-An arrow between two nodes that are not neighbours is called a chord.
+An arrow between two nodes that are not neighbors is called a chord.
 A chord is always a straight line across the circle. When two straight
 arrows join the same two nodes, they are drawn as parallel lines, each
 with its label on its own side.
 
 | Curved arrows (the default) | `curve: linear` |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/daily-arcs.svg" width="360" alt="Five labelled boxes on a circle, Wake at the top, joined by curved arrows, with a dashed straight chord from Work to Home."> | <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/daily-straight.svg" width="360" alt="The same five boxes joined by straight arrows into a pentagon, with the dashed chord from Work to Home."> |
+| <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/daily-arcs.svg" width="259" alt="Five labeled boxes on a circle, Wake at the top, joined by curved arrows, with a dashed straight chord from Work to Home."> | <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/daily-straight.svg" width="259" alt="The same five boxes joined by straight arrows into a pentagon, with the dashed chord from Work to Home."> |
 
 The diagram on the right:
 
@@ -101,7 +101,7 @@ cross the top of a box, its title moves to the bottom.
 
 | A small group: a box | A group around half the ring or more: a band |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/lifecycle-box.svg" width="360" alt="Eight boxes on a circle. Build and Test sit inside a grey box titled Make, at the bottom right."> | <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/lifecycle-band.svg" width="360" alt="Eight boxes on a circle. A grey curved band titled Funded wraps six of them, from Spec round to Monitor."> |
+| <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/lifecycle-box.svg" width="291" alt="Eight boxes on a circle. Build and Test sit inside a gray box titled Make, at the bottom right."> | <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/lifecycle-band.svg" width="340" alt="Eight boxes on a circle. A gray curved band titled Funded wraps six of them, from Spec around to Monitor."> |
 
 ## More shapes
 
@@ -113,12 +113,12 @@ figure-eight.
 
 <table>
 <tr>
-<td align="center"><img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/hub.svg" width="380" alt="Registry in the middle, with arrows out to Alpha, Bravo, Charlie, Delta and Echo, and Bravo's log hanging off Bravo."><br>A hub goes in the middle</td>
-<td align="center"><img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/wheel.svg" width="355" alt="Six boxes on a circle from Plan to Learn, each with a straight arrow in to Vision at the centre."><br>A wheel: a ring around a hub</td>
+<td align="center"><img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/hub.svg" width="345" alt="Registry in the middle, with arrows out to Alpha, Bravo, Charlie, Delta and Echo, and Bravo's log hanging off Bravo."><br>A hub goes in the middle</td>
+<td align="center"><img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/wheel.svg" width="231" alt="Six boxes on a circle from Plan to Learn, each with a straight arrow in to Vision at the center."><br>A wheel: a ring around a hub</td>
 </tr>
 <tr>
-<td align="center"><img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/satellite.svg" width="380" alt="Plan, Build, Ship and Learn on a circle, with Debug, Fix and Test on a second, smaller circle to the right of Build."><br>A cycle off the ring gets its own circle</td>
-<td align="center"><img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/figure-eight.svg" width="380" alt="Two circles that meet at Sleep: Wake, Work and Dine on the right, Dream and Toss on the left."><br>Two cycles sharing a node: a figure-eight</td>
+<td align="center"><img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/satellite.svg" width="327" alt="Plan, Build, Ship and Learn on a circle, with Debug, Fix and Test on a second, smaller circle to the right of Build."><br>A cycle off the ring gets its own circle</td>
+<td align="center"><img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/figure-eight.svg" width="250" alt="Two circles that meet at Sleep: Wake, Work and Dine on the right, Dream and Toss on the left."><br>Two cycles sharing a node: a figure-eight</td>
 </tr>
 </table>
 
@@ -129,7 +129,7 @@ diagrams, so they match what you see in your notes.
 
 ## What carries over
 
-Circular diagrams follow your theme, accent colour, font, and light or
+Circular diagrams follow your theme, accent color, font, and light or
 dark mode, like every other diagram. Like any diagram in Obsidian, they
 ignore mermaid's `theme:` and `look:` settings. Layout options such as
 `hub` can't be set in Obsidian yet.
@@ -158,7 +158,7 @@ move it. If that happens, the plugin says so in a notice and leaves
 your diagrams to Pele. Disabling the plugin also hands circular
 diagrams back to Pele.
 
-### Which package to use
+## Which package to use
 
 The same circular layout comes in four packages. Pick the one that
 matches how you draw diagrams.
@@ -167,7 +167,7 @@ matches how you draw diagrams.
 | --- | --- |
 | mermaid, in a web page or app | [mermaid-layout-circular](https://github.com/AndrewBroz/mermaid-layout-circular) |
 | Pele, in a web page or app | [pele-layout-circular](https://github.com/AndrewBroz/pele-layout-circular) |
-| Obsidian, in your notes | this package |
+| Obsidian, in your notes | this plugin |
 | your own code | [layout-circular](https://github.com/AndrewBroz/layout-circular), the shared placement math |
 
 The first three use layout-circular to decide where each node goes.

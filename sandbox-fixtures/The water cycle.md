@@ -1,5 +1,3 @@
-# The water cycle
-
 ```mermaid
 ---
 config:

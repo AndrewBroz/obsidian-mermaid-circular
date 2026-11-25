@@ -116,21 +116,24 @@ yet" in the pele-layout-circular README, which the plugin README links.
 The README now opens with what the plugin does and an Obsidian
 screenshot, then usage and install. Examples, what carries over, limits
 and how the plugin hooks into Obsidian follow. The family table ("Which
-package to use") sits at the end of "How it works", since a reader here
+package to use") comes after "How it works", since a reader here
 already uses Obsidian. The wording follows the family's docs plan and
 `layout-circular/docs/DOCS-STYLE.md`.
 
 Pictures live in `docs/media/` and the README loads them by absolute
 `raw.githubusercontent.com/.../main/` URL. Obsidian's community plugin
 browser shows this README too, and absolute URLs work there whatever it
-does with relative paths. `obsidian-note.png` is a 2x screenshot of
-`sandbox-fixtures/Screenshot.md` in reading view: sandboxed Obsidian
-1.15.1, default theme, light mode, sidebars and inline title off,
-window 560x540, cropped to the note and given a 1 px grey border. The
-eight `.svg` examples are Pele renders of the docs catalog with the
+does with relative paths. `obsidian-note.png` is a 2x screenshot
+of `sandbox-fixtures/The water cycle.md` in reading view: sandboxed
+Obsidian 1.15.1, default theme, light mode, sidebars collapsed, window
+560x540. The crop keeps the tab bar, ribbon and view header, so it reads
+as Obsidian, and stops above the status bar; it has a 1 px gray border.
+The eight `.svg` examples are Pele renders of the docs catalog with the
 plugin's own pele 1.13.0 and pele-layout-circular 0.2.0, on a white
-card so they read on GitHub's dark theme. Pele is what draws circular
-diagrams in Obsidian, so these match what a user sees, minus their
+card so they read on GitHub's dark theme. Every picture displays at
+0.65 of its natural size, so text is the same size in all of them and
+the widest table row (the groups pair) stays near 630 px. Pele is what draws
+circular diagrams in Obsidian, so these match what a user sees, minus their
 theme. Redraw them with pele-layout-circular's
 `scripts/render-docs.ts --out ../obsidian-mermaid-circular/docs/media`.
 
