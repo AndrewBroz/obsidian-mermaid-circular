@@ -1,7 +1,7 @@
 {
   "name": "obsidian-mermaid-circular",
   "version": "0.10.0",
-  "description": "Obsidian plugin that adds a circular layout for mermaid flowcharts",
+  "description": "Obsidian plugin that draws mermaid flowcharts on a circle",
   "type": "module",
   "private": true,
   "scripts": {
