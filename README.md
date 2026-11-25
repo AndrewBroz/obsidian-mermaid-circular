@@ -3,32 +3,32 @@
 An Obsidian plugin that adds a circular layout to Mermaid flowcharts.
 
 The layout code is at
+[pele-layout-circular](https://github.com/AndrewBroz/pele-layout-circular).
+Its sibling,
 [mermaid-layout-circular](https://github.com/AndrewBroz/mermaid-layout-circular),
-which shows examples of the output and explains some of the behavior, including
-direction mechanics, spoke handling, and branching.
+shows examples of the output and explains some of the behavior, including
+direction mechanics, spoke handling, and branching. Both place nodes with
+the same math.
 
 ### How it fits into Obsidian
 
-Since 1.15, Obsidian no longer ships mermaid. It draws diagrams with
+Since 1.15, Obsidian draws diagrams with
 [Pele](https://github.com/obsidianmd/pele), its own renderer, which
 has its own layout and no way to plug in another. So this plugin
-carries its own copy of mermaid and steps in only for diagrams that
-ask for a circular layout. Every other diagram is still drawn by
-Pele, exactly as before.
+carries a private copy of Pele's flowchart, wrapped with
+[pele-layout-circular](https://github.com/AndrewBroz/pele-layout-circular),
+and steps in only for diagrams that ask for a circular layout. Every
+other diagram is still drawn by Obsidian's Pele, exactly as before.
 
-Circular diagrams are dressed to match: the plugin reads the same
-colors, font and corner radius Obsidian gives Pele, so they follow
-your theme, accent color and light or dark mode, and redraw when
-those change. A diagram that sets its own `theme:` or `look:` in its
-frontmatter keeps it.
+Because circular diagrams are drawn by Pele too, they look like every
+other diagram in your vault: they follow your theme, accent color,
+font and light or dark mode, and zoom the same way. Like any diagram
+in Obsidian, they ignore mermaid's `theme:` and `look:` settings.
 
 The hand-off relies on `pele.mount`, which Obsidian uses internally
 but does not document for plugins, so a future Obsidian release could
 move it. If that happens, the plugin says so in a notice and leaves
 your diagrams to Pele.
-
-On Obsidian 1.13 and 1.14, which still bundled mermaid, the plugin
-registers the layout with that mermaid instead.
 
 ## Usage
 
@@ -70,8 +70,8 @@ npm install
 npm run build
 ```
 
-This bundles mermaid, the layout engine and the adapter into a
-minified `main.js` of about 3 MB. During development, `npm run dev`
+This bundles Pele's flowchart and the circular layout into a
+minified `main.js` of about 190 KB. During development, `npm run dev`
 rebuilds on change.
 
 To check a change in a real Obsidian, without touching your own app or
@@ -83,14 +83,8 @@ bash scripts/obsidian-sandbox/obsidian-sandbox.sh start
 
 ## Requirements
 
-Obsidian 1.13.0 or later.
-
-> [!TIP]
-> On Obsidian 1.13 and 1.14, mermaid keeps registered layouts for the
-> life of the app process and offers no way to unregister one, so after
-> disabling the plugin the layout remains available until Obsidian
-> restarts. From 1.15, disabling the plugin hands circular diagrams
-> straight back to Pele.
+Obsidian 1.15.0 or later. Disabling the plugin hands circular
+diagrams straight back to Pele.
 
 ## License
 
