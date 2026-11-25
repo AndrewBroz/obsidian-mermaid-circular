@@ -38,7 +38,7 @@ mount calls and expects a mount controller back.
 | | bytes | gzipped |
 | --- | --- | --- |
 | before (mermaid 12.3) | 3,163,104 | 860,568 |
-| after (Pele 1.13) | 187,521 | 74,024 |
+| after (Pele 1.13) | 187,553 | 74,052 |
 
 The plugin awaits `loadMermaid()` before it looks for `window.pele`.
 Obsidian loads Pele on first use. Without that call, the sandbox
@@ -52,7 +52,9 @@ Costs:
   mermaid, not Pele, and the plugin registered
   `mermaid-layout-circular` with that mermaid. Without mermaid in
   the plugin there is nothing to register, so `minAppVersion` is
-  now 1.15.0.
+  now 1.15.0. The owner chose to require 1.15. This ships as
+  0.10.0, and versions.json keeps 0.9.0 as the last release for
+  Obsidian 1.13 and 1.14.
 - A diagram's mermaid `theme:` and `look:` (such as `handDrawn`) are
   ignored, as they are for every diagram Obsidian draws. Pele has no
   hand-drawn look.
