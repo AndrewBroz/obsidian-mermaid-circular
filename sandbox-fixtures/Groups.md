@@ -33,7 +33,7 @@ flowchart LR
   G@{ view: collapsed }
 ```
 
-A group spanning three quarters of the ring, drawn as a band.
+A group spanning three quarters of the ring. A box clears, so it is a box.
 
 ```mermaid
 ---
@@ -75,4 +75,27 @@ flowchart LR
   D --> Hub
   E --> Hub
   F --> Hub
+```
+
+A group no box can clear, around a hub outside it, drawn as a band.
+
+```mermaid
+---
+config:
+  layout: circular
+---
+flowchart LR
+  subgraph Core
+    A[Alpha]
+    B[Bravo]
+    C[Charlie]
+    D[Delta]
+  end
+  A --> B --> C --> D --> E[Echo] --> F[Foxtrot] --> A
+  A --> H[Registry]
+  B --> H
+  C --> H
+  D --> H
+  E --> H
+  F --> H
 ```
