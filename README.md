@@ -93,15 +93,17 @@ flowchart LR
 ## Groups
 
 A subgraph (a group of nodes) keeps its members next to each other on
-the circle. A small group is drawn as a tight box. The circle turns, if
-needed, so the box clears every other node. A group that covers half
-the circle or more is drawn as a band, a strip that follows the circle.
-A box around that much of a circle would cover the middle. When arrows
-cross the top of a box, its title moves to the bottom.
+the circle. A group is drawn as a tight box when one fits, however
+much of the circle it covers. The circle turns, if needed, so the box
+clears every other node. Where the top of a box has no room for its
+title, the title may go below the box instead. A group becomes a band,
+a strip that follows the circle, only when no box fits. On the right,
+any box around Core would cover Registry. When arrows cross the top of
+a box, its title moves to the bottom.
 
-| A small group: a box | A group around half the ring or more: a band |
+| A group a box can clear: a box | A group no box can clear: a band |
 | --- | --- |
-| <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/lifecycle-box.svg" width="291" alt="Eight boxes on a circle. Build and Test sit inside a gray box titled Make, at the bottom right."> | <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/lifecycle-band.svg" width="340" alt="Eight boxes on a circle. A gray curved band titled Funded wraps six of them, from Spec around to Monitor."> |
+| <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/lifecycle-box.svg" width="290" alt="Eight boxes on a circle. Build and Test sit inside a gray box titled Make, at the bottom."> | <img src="https://raw.githubusercontent.com/AndrewBroz/obsidian-mermaid-circular/main/docs/media/hub-band.svg" width="300" alt="Six boxes on a circle around a hub, Registry, with an arrow from each to the hub. A gray curved strip titled Core runs along the right half under Alpha, Bravo, Charlie and Delta, and leaves the hub outside."> |
 
 ## More shapes
 

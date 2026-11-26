@@ -140,3 +140,20 @@ theme. Redraw them with pele-layout-circular's
 `package.json`'s description now reads "Obsidian plugin that draws
 mermaid flowcharts on a circle". `manifest.json` is unchanged until the
 next release, so the repo and the released manifest agree.
+
+## 2026-11-26: pele-layout-circular 0.2.2 reaches the plugin
+
+The devDependency is `pele-layout-circular@^0.2.2`. It carries
+layout-circular 0.3.0, which picks a group's shape by fit. A group is a
+box when one clears, however much of the ring it covers. A box may put
+its title below where the ring can't turn to fit it on top. A group is
+a band only when no box fits. The owner picked this from renders; it is
+provisional and may change.
+
+The README groups pair is now `lifecycle-box.svg` beside `hub-band.svg`,
+a band around a hub outside the group. `lifecycle-band.svg` is gone:
+the six-of-eight Funded group is a box now. The README loads pictures
+from `main`, and no released copy points elsewhere, so the old file
+needn't wait. Both pictures display at 0.65 of their natural size, as
+before. `sandbox-fixtures/Groups.md` gains the hub band.
+

@@ -20,7 +20,7 @@
     "esbuild": "^0.28.0",
     "obsidian": "^1.10.0",
     "pele": "^1.13.0",
-    "pele-layout-circular": "^0.2.0",
+    "pele-layout-circular": "^0.2.2",
     "typescript": "^5.9.0"
   }
 }
